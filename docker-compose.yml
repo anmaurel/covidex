@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+    db:
+        build: ./db
+        container_name: db_covidex
+        environment: 
+            MYSQL_DATABASE: covidex
+            MYSQL_ROOT_PASSWORD: mypswd
+            MYSQL_USER: test
+            MYSQL_PASSWORD: mypswdtest
+            DATABASE_HOST: db
+        cap_add:
+            - SYS_NICE
+        volumes:
+            - /var/lib/mysql
+        restart: always
+        
+    back:
+        build: ./back
+        container_name: back_covidex
+        environment:
+            MYSQL_DATABASE: covidex
+            MYSQL_USER: test
+            MYSQL_PASSWORD: mypswdtest
+            MYSQL_PORT: 3306
+            DATABASE_HOST: db
+        ports:
+            - 9000:9000
+        restart: on-failure
+
+    front:
+        build: ./front
+        container_name: front_covidex
+        ports:
+            - 3000:80
+        
