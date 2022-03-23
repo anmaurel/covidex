@@ -1,8 +1,8 @@
 import React from "react";
 import { configure, shallow } from "enzyme";
 import App from "./App";
-import Adapter from "enzyme-adapter-react-16";
-import { Button, Card, ListGroup } from "react-bootstrap";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
+import { Card, ListGroup } from "react-bootstrap";
 import EditIcon from "@material-ui/icons/Edit";
 import CancelIcon from "@material-ui/icons/Cancel";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -104,10 +104,12 @@ describe("Check list of variants", () => {
     app.find(ListGroup.Item).at(0).simulate("click");
     expect(app.find(Card.Title).at(0).text()).toBe(variants[0].name);
   });
-  
+
   test("Clicking on edit should change form state", () => {
     app.find(EditIcon).at(0).simulate("click");
-    expect(app.find(Card.Title).at(1).text()).toBe(`Edition de ${variants[0].name}, id:${variants[0].id}`);
+    expect(app.find(Card.Title).at(1).text()).toBe(
+      `Edition de ${variants[0].name}, id:${variants[0].id}`
+    );
   });
 
   test("Clicking on exit edit should change form state to new", () => {
@@ -116,7 +118,7 @@ describe("Check list of variants", () => {
   });
 
   test("Clicking on delete should call deleteVariant", () => {
-    const deleteVariant = jest.spyOn(app.instance(),'deleteVariant');
+    const deleteVariant = jest.spyOn(app.instance(), "deleteVariant");
     app.find(DeleteIcon).at(0).simulate("click");
     expect(deleteVariant).toHaveBeenCalledWith(variants[0].id);
   });
