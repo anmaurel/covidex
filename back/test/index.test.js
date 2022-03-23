@@ -73,7 +73,7 @@ describe('Covidex API', () => {
             variant
                 .save((err, variant) => {
                     request(url)
-                        .put('/variant/update' + variant.id)
+                        .put('/variant/update/' + variant.id)
                         .set('Content-Type', 'application/json')
                         .send({ name: 'TestMochaUp', text: 'DescModified', onset_date: 'décembre 2025' })
                         .expect(200)
@@ -99,7 +99,7 @@ describe('Covidex API', () => {
             variant
                 .save((err, variant) => {
                     request(url)
-                        .delete('/variant/delete' + variant.id)
+                        .delete('/variant/delete/' + variant.id)
                         .set('Content-Type', 'application/json')
                         .expect(200)
                         .end(function (err, res) {

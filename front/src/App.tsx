@@ -31,13 +31,11 @@ interface IOwnState {
 }
 
 class App extends React.Component<{}, IOwnState> {
-  state = {
-    variants: [] as Variant[],
-    selectedVariantID: undefined as undefined | number,
+  state: IOwnState = {
+    variants: [],
     inputName: "",
     inputText: "",
     inputDate: "",
-    editVariant: undefined as undefined | Variant,
   };
 
   componentDidMount() {
@@ -84,23 +82,23 @@ class App extends React.Component<{}, IOwnState> {
         await axios.put(
           `http://localhost:9000/variant/update/${this.state.editVariant.id}`,
           {
-            name: name,
-            text: text,
+            name,
+            text,
             onset_date: date,
           }
         );
         this.setState({ editVariant: undefined });
       } else {
         await axios.post(`http://localhost:9000/variant/add`, {
-          name: name,
-          text: text,
+          name,
+          text,
           onset_date: date,
         });
       }
       this.getVariants();
       this.setState({ inputDate: "", inputName: "", inputText: "" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -156,7 +154,7 @@ class App extends React.Component<{}, IOwnState> {
           <Col sm={12} md={8}>
             <div className="sticky-top d-flex flex-column align-items-stretch">
               {selectedVariant && (
-                <Card>
+                <Card className="mb-3">
                   <Card.Body>
                     <Card.Title>{selectedVariant.name}</Card.Title>
                     <Card.Text>{selectedVariant.text}</Card.Text>
@@ -166,7 +164,7 @@ class App extends React.Component<{}, IOwnState> {
                   </Card.Body>
                 </Card>
               )}
-              <Card className="mt-3">
+              <Card>
                 <Card.Body>
                   {this.state.editVariant ? (
                     <Card.Title>
