@@ -132,7 +132,12 @@ class App extends React.Component<{}, IOwnState> {
                         <div>
                           <EditIcon
                             onClick={() => {
-                              this.setState({ editVariant: variant });
+                              this.setState({
+                                editVariant: variant,
+                                inputName: variant.name,
+                                inputText: variant.text,
+                                inputDate: variant.onset_date,
+                              });
                             }}
                           />
                           <DeleteIcon
@@ -176,7 +181,7 @@ class App extends React.Component<{}, IOwnState> {
                         className="ml-3"
                         style={{ cursor: "pointer" }}
                         onClick={() => {
-                          this.setState({ editVariant: undefined });
+                          this.setState({ editVariant: undefined, inputName: "", inputText: "", inputDate: "" });
                         }}
                       />
                     </Card.Title>
